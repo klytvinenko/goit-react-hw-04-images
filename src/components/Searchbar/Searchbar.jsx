@@ -1,34 +1,34 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { BtnLabel, SearchForm, SearchFormBtn, SearchInput, StyledSearchBar } from "./Searchbar.styled"
 
-export class Searchbar extends Component {
+export const Searchbar = ({onSubmit}) =>  {
 
-  state = {
-    query: ''
-  }
-  handleInputChange = event => {
-    this.setState({query:event.target.value})
-  }
+  // state = {
+  //   query: ''
+  // }
+  // handleInputChange = event => {
+  //   this.setState({query:event.target.value})
+  // }
 
-  // const [query, setQuery] = React.useState('');
-  // const handleInputChange = event => {
-  //   setQuery(event.target.value);
-  // };
+  const [query, setQuery] = useState('');
+  const handleInputChange = event => {
+    setQuery(event.target.value);
+  };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       alert('Please enter a search query');
       return;
     }
-    this.props.onSubmit(this.state.query);
+    onSubmit(query);
   };
 
-  render () {
+
 
     return (
       <StyledSearchBar>
-       <SearchForm onSubmit={this.handleSubmit}>
+       <SearchForm onSubmit={handleSubmit}>
         <SearchFormBtn type="submit" name="query">
           <BtnLabel>Search</BtnLabel>
         </SearchFormBtn>
@@ -38,13 +38,12 @@ export class Searchbar extends Component {
               autocomplete="off"
               autofocus
               placeholder="Search images and photos"
-              value={this.state.query}
-              onChange={this.handleInputChange}
+              value={query}
+              onChange={handleInputChange}
         />
       </SearchForm>
     </StyledSearchBar>
       );
     
-  }
 
 };
